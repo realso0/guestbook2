@@ -15,7 +15,7 @@ import com.javaex.vo.GuestbookVo;
 
 
 @WebServlet("/gb")
-public class guestbookServlet extends HttpServlet {
+public class guestbookController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//System.out.println("환영합니다 Servlet guestbook2"); //웹페이지와 연결됬는지 확인
@@ -29,7 +29,8 @@ public class guestbookServlet extends HttpServlet {
 			List<GuestbookVo> list=dao.getList(); 
 			
 			//어떤 데이터가 올지 모르므로, RequestDispatcher 객체에 담아 보냄.
-			request.setAttribute("elist", list); //리스트 실어 보내기, request.setAttribute(부를 이름, 보낼 데이터), 꺼내쓸 때는 getAttribute
+			request.setAttribute("elist", list); //리스트 실어 보내기, request.setAttribute(부를 이름, 보낼 데이터),
+												//꺼내쓸 때는 getAttribute
 			RequestDispatcher rd=request.getRequestDispatcher("list.jsp"); //포워드 작업
 			rd.forward(request,response);
 		} else if ("deleteform".equals(actionform)) {
@@ -38,7 +39,8 @@ public class guestbookServlet extends HttpServlet {
 			int no = Integer.parseInt(request.getParameter("no"));
 			request.setAttribute("no", no);
 			
-			RequestDispatcher rd=request.getRequestDispatcher("deleteform.jsp"); //값을 입력받아, RequestDispatcher객체가 만들어지고, rd로 객체를 받는다. request클래스 내의 getRequestDispatcher메소드를 이용해, form.jsp로 보낸다.
+			RequestDispatcher rd=request.getRequestDispatcher("deleteform.jsp"); //값을 입력받아, RequestDispatcher객체가 만들어지고, 
+			//rd로 객체를 받는다. request클래스 내의 getRequestDispatcher메소드를 이용해, form.jsp로 보낸다.
 			rd.forward(request, response); //rd의 forword메소드를 이용하여, request문서와 response문서를 form.jsp로 보낸다.
 			
 		} else if ("add".equals(actionform)) {
