@@ -2,9 +2,6 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%
-	List<GuestbookVo> list=(List<GuestbookVo>)request.getAttribute("elist"); //Object형을 뱉어냄, Object형으로 형변환해서, 리스트를 꺼내야함.
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,16 +26,18 @@
 	</form>
 	<br/>
 <%
+
+	List<GuestbookVo> list=(List<GuestbookVo>)request.getAttribute("elist"); //Object형을 뱉어냄, Object형으로 형변환해서, 리스트를 꺼내야함.
 	for(GuestbookVo vo : list) {
 	
-	%>
+%>
 	
 			<table width=510 border=1>
 				<tr>
 					<td><%=vo.getNo() %></td>
 					<td><%=vo.getName() %></td>
 					<td><%=vo.getRegDate() %></td>
-					<td><a href="gb?a=delete">삭제</a></td>
+					<td><a href="gb?a=deleteform&no=<%=vo.getNo() %>">삭제</a></td>
 				</tr>
 				<tr>
 					<td colspan=4><%=vo.getContent() %></td>

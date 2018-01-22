@@ -22,16 +22,27 @@ public class guestbookServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String actionform=request.getParameter("a"); //입력받는 값으로, a 라는 변수를 하나 만들어 줌.
 		
-		if ("deleteform".equals(actionform)) {
+		if ("list".equals(actionform)) {
+			System.out.println("list 진입");
+			
+			GuestbookDao dao=new GuestbookDao();
+			List<GuestbookVo> list=dao.getList(); 
+			
+			//어떤 데이터가 올지 모르므로, RequestDispatcher 객체에 담아 보냄.
+			request.setAttribute("elist", list); //리스트 실어 보내기, request.setAttribute(부를 이름, 보낼 데이터), 꺼내쓸 때는 getAttribute
+			RequestDispatcher rd=request.getRequestDispatcher("list.jsp"); //포워드 작업
+			rd.forward(request,response);
+		} else if ("deleteform".equals(actionform)) {
 			//System.out.println("deleteform 진입"); //여기까지 웹 접속되는지 확인
-			RequestDispatcher rd=request.getRequestDispatcher("deleteform.jsp"); //값을 입력받아, RequestDispatcher객체가 만들어지고, rd로 객체를 받는다. 
-																			//request클래스 내의 getRequestDispatcher메소드를 이용해, form.jsp로 보낸다.
+			
+			int no = Integer.parseInt(request.getParameter("no"));
+			request.setAttribute("no", no);
+			
+			RequestDispatcher rd=request.getRequestDispatcher("deleteform.jsp"); //값을 입력받아, RequestDispatcher객체가 만들어지고, rd로 객체를 받는다. request클래스 내의 getRequestDispatcher메소드를 이용해, form.jsp로 보낸다.
 			rd.forward(request, response); //rd의 forword메소드를 이용하여, request문서와 response문서를 form.jsp로 보낸다.
 			
 		} else if ("add".equals(actionform)) {
 			//System.out.println("add 진입");
-			
-			request.setCharacterEncoding("UTF-8");
 			
 			String name=request.getParameter("name"); //폼에서 약속한 변수이름의 값을 받아옴.
 			String password=request.getParameter("pass");
@@ -52,25 +63,16 @@ public class guestbookServlet extends HttpServlet {
 			response.sendRedirect("gb?a=list");
 		} else if ("delete".equals(actionform)) {
 			System.out.println("delete 진입");
-			int no = Integer.valueOf(request.getParameter("no"));
+			
+			int no = Integer.parseInt(request.getParameter("no"));
 			String password=request.getParameter("password");
 
 			GuestbookDao dao=new GuestbookDao();
-			
 			dao.delete(no, password);
 			
 			response.sendRedirect("gb?a=list");
-		} else if ("list".equals(actionform)) {
-			System.out.println("list 진입");
-			
-			GuestbookDao dao=new GuestbookDao();
-			
-			List<GuestbookVo> list=dao.getList(); 
-			
-			//어떤 데이터가 올지 모르므로, RequestDispatcher 객체에 담아 보냄.
-			request.setAttribute("elist", list); //리스트 실어 보내기, request.setAttribute(부를 이름, 보낼 데이터), 꺼내쓸 때는 getAttribute
-			RequestDispatcher rd=request.getRequestDispatcher("list.jsp"); //포워드 작업
-			rd.forward(request,response);
+		} else {
+			System.out.println("잘못 입력하였습니다. 다시 입력해주세요.");
 		}
 		
 	}
