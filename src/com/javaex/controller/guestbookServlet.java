@@ -29,7 +29,10 @@ public class guestbookServlet extends HttpServlet {
 			rd.forward(request, response); //rd의 forword메소드를 이용하여, request문서와 response문서를 form.jsp로 보낸다.
 			
 		} else if ("add".equals(actionform)) {
-			System.out.println("add 진입");
+			//System.out.println("add 진입");
+			
+			request.setCharacterEncoding("UTF-8");
+			
 			String name=request.getParameter("name"); //폼에서 약속한 변수이름의 값을 받아옴.
 			String password=request.getParameter("pass");
 			String content=request.getParameter("content");
@@ -40,7 +43,7 @@ public class guestbookServlet extends HttpServlet {
 			vo.setPassword(password);
 			vo.setContent(content);
 			
-			System.out.println(vo.toString());
+			//System.out.println(vo.toString());
 			
 			GuestbookDao dao=new GuestbookDao();
 			
@@ -53,9 +56,9 @@ public class guestbookServlet extends HttpServlet {
 			String password=request.getParameter("password");
 
 			GuestbookDao dao=new GuestbookDao();
-
+			
 			dao.delete(no, password);
-
+			
 			response.sendRedirect("gb?a=list");
 		} else if ("list".equals(actionform)) {
 			System.out.println("list 진입");

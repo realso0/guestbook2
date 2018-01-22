@@ -11,8 +11,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form method="get" action="gb?a=delete">
-	<input type='text' name="no" value="<%=no%>"> 번을 지우시려면, 비밀번호를 입력해주세요.
+	<form method="get" action="gb">
+	<input type='text' name="no" value="<%=no%>"> 번을 지우시려면, 비밀번호를 입력해주세요.\
+	<input type="hidden" name="a" value="delete">
 	<table>
 		<tr>
 			<td>비밀번호</td>
