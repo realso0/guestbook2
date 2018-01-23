@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaex.dao.GuestbookDao;
+import com.javaex.util.WebUtil;
 import com.javaex.vo.GuestbookVo;
 
 
@@ -31,17 +32,20 @@ public class guestbookController extends HttpServlet {
 			//어떤 데이터가 올지 모르므로, RequestDispatcher 객체에 담아 보냄.
 			request.setAttribute("elist", list); //리스트 실어 보내기, request.setAttribute(부를 이름, 보낼 데이터),
 												//꺼내쓸 때는 getAttribute, 별명을 elist로 해서 받음.
-			RequestDispatcher rd=request.getRequestDispatcher("list.jsp"); //포워드 작업
-			rd.forward(request,response);
+//			RequestDispatcher rd=request.getRequestDispatcher("list.jsp"); //포워드 작업
+//			rd.forward(request,response);
+			WebUtil.forward(request, response, "/WEB-INF/list.jsp");
+			
 		} else if ("deleteform".equals(actionform)) {
 			System.out.println("deleteform 진입"); //여기까지 웹 접속되는지 확인
 			
 			int no = Integer.parseInt(request.getParameter("no"));
 			request.setAttribute("no", no); //no라는 값을 별명을 no로 해서 받음.
 			
-			RequestDispatcher rd=request.getRequestDispatcher("deleteform.jsp"); //값을 입력받아, RequestDispatcher객체가 만들어지고, 
-			//rd로 객체를 받는다. request클래스 내의 getRequestDispatcher메소드를 이용해, deleteform.jsp로 보낸다.
-			rd.forward(request, response); //rd의 forword메소드를 이용하여, request문서와 response문서를 deleteform.jsp로 보낸다.
+//			RequestDispatcher rd=request.getRequestDispatcher("deleteform.jsp"); //값을 입력받아, RequestDispatcher객체가 만들어지고, 
+//			//rd로 객체를 받는다. request클래스 내의 getRequestDispatcher메소드를 이용해, deleteform.jsp로 보낸다.
+//			rd.forward(request, response); //rd의 forword메소드를 이용하여, request문서와 response문서를 deleteform.jsp로 보낸다.
+			WebUtil.forward(request, response, "/WEB-INF/deleteform.jsp");
 			
 		} else if ("add".equals(actionform)) {
 			System.out.println("add 진입");
@@ -62,7 +66,9 @@ public class guestbookController extends HttpServlet {
 			
 			dao.insert(vo);
 			
-			response.sendRedirect("gb?a=list");
+//			response.sendRedirect("gb?a=list");
+			WebUtil.redirect(request, response, "/guestbook_MVC2/gb?a=list");
+			
 		} else if ("delete".equals(actionform)) {
 			System.out.println("delete 진입");
 			
@@ -72,7 +78,9 @@ public class guestbookController extends HttpServlet {
 			GuestbookDao dao=new GuestbookDao();
 			dao.delete(no, password);
 			
-			response.sendRedirect("gb?a=list");
+//			response.sendRedirect("gb?a=list");
+			WebUtil.redirect(request, response, "/guestbook_MVC2/gb?a=list");
+			
 		} else {
 			System.out.println("잘못 입력하였습니다. 다시 입력해주세요.");
 		}
