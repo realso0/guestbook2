@@ -30,14 +30,14 @@ public class guestbookController extends HttpServlet {
 			
 			//어떤 데이터가 올지 모르므로, RequestDispatcher 객체에 담아 보냄.
 			request.setAttribute("elist", list); //리스트 실어 보내기, request.setAttribute(부를 이름, 보낼 데이터),
-												//꺼내쓸 때는 getAttribute
+												//꺼내쓸 때는 getAttribute, 별명을 elist로 해서 받음.
 			RequestDispatcher rd=request.getRequestDispatcher("list.jsp"); //포워드 작업
 			rd.forward(request,response);
 		} else if ("deleteform".equals(actionform)) {
 			System.out.println("deleteform 진입"); //여기까지 웹 접속되는지 확인
 			
 			int no = Integer.parseInt(request.getParameter("no"));
-			request.setAttribute("no", no);
+			request.setAttribute("no", no); //no라는 값을 별명을 no로 해서 받음.
 			
 			RequestDispatcher rd=request.getRequestDispatcher("deleteform.jsp"); //값을 입력받아, RequestDispatcher객체가 만들어지고, 
 			//rd로 객체를 받는다. request클래스 내의 getRequestDispatcher메소드를 이용해, deleteform.jsp로 보낸다.
